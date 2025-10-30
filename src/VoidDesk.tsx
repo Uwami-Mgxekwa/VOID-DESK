@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { Search, User, Clock, AlertCircle, CheckCircle, XCircle, MessageSquare, MoreVertical, Sun, Moon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './auth';
 
 export default function VoidDesk() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const [tickets, setTickets] = useState([
     { id: 'TK-1001', title: 'Login page not responding', customer: 'John Smith', priority: 'high', status: 'open', time: '5 min ago', messages: 3 },
     { id: 'TK-1002', title: 'Payment gateway error', customer: 'Sarah Johnson', priority: 'critical', status: 'in-progress', time: '12 min ago', messages: 7 },
@@ -125,6 +129,12 @@ export default function VoidDesk() {
             <div className={`w-10 h-10 ${darkMode ? 'bg-slate-800' : 'bg-gray-200'} rounded-full flex items-center justify-center transition-colors duration-300`}>
               <User className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-700'}`} />
             </div>
+            <button
+              onClick={() => { logout(); navigate('/login', { replace: true }); }}
+              className={`px-3 py-2 rounded-lg ${darkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-200' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'} transition-colors`}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </header>
